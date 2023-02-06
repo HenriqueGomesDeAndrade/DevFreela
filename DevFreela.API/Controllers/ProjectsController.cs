@@ -1,5 +1,9 @@
-﻿using DevFreela.Application.InputModels;
+﻿using DevFreela.Application.Commands.ProjectCommands;
+using DevFreela.Application.InputModels;
+using DevFreela.Application.Queries.GetAllProjects;
+using DevFreela.Application.Queries.GetProjectById;
 using DevFreela.Application.Services.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Data.SqlTypes;
@@ -10,82 +14,87 @@ namespace DevFreela.API.Controllers
     [Route("api/Projects")]
     public class ProjectsController : ControllerBase
     {
-        private readonly IProjectService _projectService;
+        private readonly IMediator _mediator;
         
-        public ProjectsController(IProjectService projectService)
+        public ProjectsController(IMediator mediator)
         {
-            _projectService = projectService;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public IActionResult Get(string query)
+        public async Task<IActionResult> Get(string query)
         {
-            var projects = _projectService.GetAll(query);
+            var projectsQuery = new GetAllProjectsQuery(query);
+            var projects = await _mediator.Send(projectsQuery);
             return Ok(projects);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var project = _projectService.GetById(id);
+            var projectQuery = new GetProjectByIdQuery(id);
+            var project = await _mediator.Send(projectQuery);
 
             if (project == null)
             {
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(project);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] NewProjectInputModel inputModel)
+        public async Task<IActionResult> Post([FromBody] CreateProjectCommand command)
         {
             //return BadRequest
+            var id = await _mediator.Send(command);
 
-            var id = _projectService.Create(inputModel);
-
-            return CreatedAtAction(nameof(GetById), new {id = id}, inputModel); ;
+            return CreatedAtAction(nameof(GetById), new {id = id}, command); ;
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] UpdateProjectInputModel inputModel)
+        public IActionResult Put(int id, [FromBody] UpdateProjectCommand command)
         {
             //return BadRequest
 
-            _projectService.Update(inputModel);
-
+            _mediator.Send(command);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            //return Not found
+            var command = new DeleteProjectCommand(id);
 
-            _projectService.Delete(id);
+
+            await _mediator.Send(command);
 
             return NoContent();
         }
 
         [HttpPost("{id}/Comments")]
-        public IActionResult PostComment(int id, [FromBody] CreateCommentInputModel createCommentModel)
+        public async Task<IActionResult> PostComment(int id, [FromBody] CreateCommentCommand command)
         {
+            await _mediator.Send(command);
 
-            _projectService.CreateComment(createCommentModel);
             return NoContent();
         }
 
         [HttpPut("{id}/Start")]
-        public IActionResult Start(int id)
+        public async Task<IActionResult> Start(int id)
         {
-            _projectService.Start(id);
+            var command = new StartProjectCommand(id);
+            await _mediator.Send(command);
+
             return NoContent();
         }
 
         [HttpPut("{id}/Finish")]
-        public IActionResult Finish(int id)
+        public async Task<IActionResult> Finish(int id)
         {
-            _projectService.Finish(id);
+            var command = new FinishProjectCommand(id);
+            await _mediator.Send(command);
+
             return NoContent();
         }
     }
