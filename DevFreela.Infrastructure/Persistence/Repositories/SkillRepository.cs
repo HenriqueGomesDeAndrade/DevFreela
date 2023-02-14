@@ -1,7 +1,7 @@
 ﻿using Dapper;
-using DevFreela.Application.ViewModels;
+using DevFreela.Core.DTOs;
+using DevFreela.Core.Repositories;
 using DevFreela.Infraestructure.Persistence;
-using MediatR;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -10,25 +10,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Application.Queries.GetAllSkills
+namespace DevFreela.Infrastructure.Persistence.Repositories
 {
-    public class GetAllSkillsQueryHandler : IRequestHandler<GetAllSkillsQuery, List<SkillViewModel>>
+    public class SkillRepository : BaseRepository, ISkillRepository
     {
+
         private readonly string _connectionString;
-        public GetAllSkillsQueryHandler(IConfiguration configuration)
+        public SkillRepository(DevFreelaDbContext dbContext, IConfiguration configuration)
+            :base(dbContext)
         {
             _connectionString = configuration.GetConnectionString("DevFreelaCs");
+
         }
 
-        public async Task<List<SkillViewModel>> Handle(GetAllSkillsQuery request, CancellationToken cancellationToken)
+        public async Task<List<SkillDto>> GetAllAsync()
         {
-            using (var sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
             {
                 sqlConnection.Open();
 
-                var script = "SELECT Id, Description FROM Skills";
+                string script = "SELECT Id, Description FROM Skills";
 
-                var skills = await sqlConnection.QueryAsync<SkillViewModel>(script);
+                IEnumerable<SkillDto> skills = await sqlConnection.QueryAsync<SkillDto>(script);
                 return skills.ToList();
             }
 

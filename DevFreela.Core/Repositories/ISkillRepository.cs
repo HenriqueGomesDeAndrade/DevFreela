@@ -1,4 +1,4 @@
-﻿using DevFreela.Core.Entities;
+﻿using DevFreela.Core.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace DevFreela.Core.Repositories
 {
-    public interface IUserRepository : IBaseRepository
+    public interface ISkillRepository : IBaseRepository
     {
-        Task<User> GetByIdAsync(int id);
-        Task AddAsync(User user);
+        Task<List<SkillDto>> GetAllAsync();
     }
 }
