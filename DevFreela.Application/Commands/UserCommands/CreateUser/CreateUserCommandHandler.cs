@@ -23,7 +23,7 @@ namespace DevFreela.Application.Commands.UserCommands
 
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var user = new User(request.FullName, request.Email, request.BirthDate);
+            User user = new User(request.FullName, request.Email, request.BirthDate);
 
             await _userRepository.AddAsync(user);
             await _userRepository.SaveChangesAsync();

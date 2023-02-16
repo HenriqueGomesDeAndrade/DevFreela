@@ -45,7 +45,6 @@ namespace DevFreela.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateProjectCommand command)
         {
-            //return BadRequest
             var id = await _mediator.Send(command);
 
             return CreatedAtAction(nameof(GetById), new {id = id}, command); ;
@@ -54,8 +53,6 @@ namespace DevFreela.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] UpdateProjectCommand command)
         {
-            //return BadRequest
-
             _mediator.Send(command);
             return NoContent();
         }
