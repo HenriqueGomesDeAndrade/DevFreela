@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Application.Queries.GetAllProjects
+namespace DevFreela.Application.Queries.ProjectQueries
 {
     public class GetAllProjectsQueryHandler : IRequestHandler<GetAllProjectsQuery, List<ProjectViewModel>>
     {
@@ -27,7 +27,7 @@ namespace DevFreela.Application.Queries.GetAllProjects
         public async Task<List<ProjectViewModel>> Handle(GetAllProjectsQuery request, CancellationToken cancellationToken)
         {
             List<Project> projects = await _projectRepository.GetAllAsync();
-            return projects  
+            return projects
                     .Select(p => new ProjectViewModel(p.Title, p.CreatedAt))
                     .ToList();
         }
