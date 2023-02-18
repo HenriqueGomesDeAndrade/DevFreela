@@ -1,16 +1,19 @@
 ﻿using DevFreela.Application.Commands.ProjectCommands;
 using DevFreela.Application.InputModels;
-using DevFreela.Application.Queries.GetAllProjects;
+using DevFreela.Application.Queries.ProjectQueries;
 using DevFreela.Application.Queries.GetProjectById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Data.SqlTypes;
 using System.Security.Cryptography.Xml;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DevFreela.API.Controllers
 {
     [Route("api/Projects")]
+    [Authorize(Roles = "client")]
+
     public class ProjectsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -21,6 +24,7 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "client, freelancer")]
         public async Task<IActionResult> Get(string query)
         {
             var projectsQuery = new GetAllProjectsQuery(query);
@@ -29,6 +33,8 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "client, freelancer")]
+
         public async Task<IActionResult> GetById(int id)
         {
             var projectQuery = new GetProjectByIdQuery(id);
@@ -69,6 +75,7 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpPost("{id}/Comments")]
+        [Authorize(Roles = "client, freelancer")]
         public async Task<IActionResult> PostComment(int id, [FromBody] CreateCommentCommand command)
         {
             await _mediator.Send(command);
