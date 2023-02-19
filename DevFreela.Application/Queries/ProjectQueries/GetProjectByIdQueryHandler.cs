@@ -1,4 +1,5 @@
-﻿using DevFreela.Application.ViewModels;
+﻿using DevFreela.Application.Queries.ProjectQueries;
+using DevFreela.Application.ViewModels;
 using DevFreela.Core.Entities;
 using DevFreela.Core.Repositories;
 using DevFreela.Infraestructure.Persistence;

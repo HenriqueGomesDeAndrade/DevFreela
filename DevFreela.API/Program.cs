@@ -1,5 +1,4 @@
 using DevFreela.API.Filters;
-using DevFreela.API.Models;
 using DevFreela.Application.Commands.ProjectCommands;
 using DevFreela.Application.Validators;
 using DevFreela.Core.Repositories;
@@ -27,8 +26,7 @@ builder.Services.AddValidatorsFromAssemblyContaining(typeof(CreateUserCommandVal
 
 builder.Services.AddMediatR(typeof(CreateProjectCommand));
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddEndpointsApiExplorer()
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "DevFreela.API", Version = "v1" });

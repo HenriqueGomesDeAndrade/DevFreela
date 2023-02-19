@@ -1,5 +1,4 @@
 ﻿using DevFreela.Application.Commands.ProjectCommands;
-using DevFreela.Application.InputModels;
 using DevFreela.Application.Queries.ProjectQueries;
 using DevFreela.Application.Queries.GetProjectById;
 using MediatR;
@@ -34,7 +33,6 @@ namespace DevFreela.API.Controllers
 
         [HttpGet("{id}")]
         [Authorize(Roles = "client, freelancer")]
-
         public async Task<IActionResult> GetById(int id)
         {
             var projectQuery = new GetProjectByIdQuery(id);

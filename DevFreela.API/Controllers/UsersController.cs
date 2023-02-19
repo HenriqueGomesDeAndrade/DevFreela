@@ -1,5 +1,4 @@
 ﻿using DevFreela.Application.Commands.UserCommands;
-using DevFreela.Application.InputModels;
 using DevFreela.Application.Queries.UserQueries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
