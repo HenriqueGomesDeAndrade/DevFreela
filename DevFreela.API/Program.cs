@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using DevFreela.Infrastructure.Payments;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +27,7 @@ builder.Services.AddValidatorsFromAssemblyContaining(typeof(CreateUserCommandVal
 
 builder.Services.AddMediatR(typeof(CreateProjectCommand));
 
-builder.Services.AddEndpointsApiExplorer()
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "DevFreela.API", Version = "v1" });
@@ -76,6 +77,10 @@ builder.Services
 
 var connectionString = builder.Configuration.GetConnectionString("DevFreelaCs");
 builder.Services.AddDbContext<DevFreelaDbContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddHttpClient();
+
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 builder.Services.AddScoped<IBaseRepository, BaseRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();

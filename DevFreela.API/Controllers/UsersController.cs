@@ -50,7 +50,7 @@ namespace DevFreela.API.Controllers
             if (loginUserViewModel == null)
                 return BadRequest();
 
-            return NoContent();
+            return Ok(loginUserViewModel);
         }
     }
 }

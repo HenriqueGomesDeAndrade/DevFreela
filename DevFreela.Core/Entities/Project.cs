@@ -31,7 +31,7 @@ namespace DevFreela.Core.Entities
         public decimal TotalCost { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? StartedAt { get; private set; }
-        public DateTime FinishedAt { get; private set; }
+        public DateTime? FinishedAt { get; private set; }
         public ProjectStatusEnum Status { get; private set; }
         public List<ProjectComment> Comments { get; private set; }
 
@@ -59,6 +59,12 @@ namespace DevFreela.Core.Entities
                 Status = ProjectStatusEnum.Finished;
                 FinishedAt = DateTime.Now;
             }
+        }
+
+        public void SetPaymentPending()
+        {
+            Status = ProjectStatusEnum.PaymentPending;
+            FinishedAt = null;
         }
 
         public void Update(string title, string description, decimal totalCost)

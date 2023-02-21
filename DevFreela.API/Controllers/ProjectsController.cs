@@ -91,9 +91,8 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpPut("{id}/Finish")]
-        public async Task<IActionResult> Finish(int id)
+        public async Task<IActionResult> Finish(int id, [FromBody] FinishProjectCommand command)
         {
-            var command = new FinishProjectCommand(id);
             await _mediator.Send(command);
 
             return NoContent();
