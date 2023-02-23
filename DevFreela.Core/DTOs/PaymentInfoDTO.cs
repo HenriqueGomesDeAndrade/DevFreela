@@ -8,13 +8,14 @@ namespace DevFreela.Core.DTOs
 {
     public class PaymentInfoDTO
     {
-        public PaymentInfoDTO(int id, string creditCardNumber, string cvv, string expiresAt, string fullName)
+        public PaymentInfoDTO(int id, string creditCardNumber, string cvv, string expiresAt, string fullName, decimal totalCost)
         {
             Id = id;
             CreditCardNumber = creditCardNumber;
             Cvv = cvv;
             ExpiresAt = expiresAt;
             FullName = fullName;
+            TotalCost = totalCost;
         }
 
         public int Id { get; set; }
@@ -22,5 +23,6 @@ namespace DevFreela.Core.DTOs
         public string Cvv { get; set; }
         public string ExpiresAt { get; set; }
         public string FullName { get; set; }
+        public decimal TotalCost { get; set; }
     }
 }

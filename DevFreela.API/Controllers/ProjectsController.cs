@@ -66,7 +66,6 @@ namespace DevFreela.API.Controllers
         {
             var command = new DeleteProjectCommand(id);
 
-
             await _mediator.Send(command);
 
             return NoContent();
@@ -93,9 +92,12 @@ namespace DevFreela.API.Controllers
         [HttpPut("{id}/Finish")]
         public async Task<IActionResult> Finish(int id, [FromBody] FinishProjectCommand command)
         {
-            await _mediator.Send(command);
+            var result = await _mediator.Send(command);
 
-            return NoContent();
+            if (!result)
+                return BadRequest("O pagamento não pôde ser processado.");
+
+            return Accepted();
         }
     }
 }
