@@ -20,6 +20,7 @@ namespace DevFreela.Application.Commands.ProjectCommands
 
         public StartProjectCommandHandler(IProjectRepository projectRepository)
         {
+            _projectRepository = projectRepository;
         }
 
         public async Task<Unit> Handle(StartProjectCommand request, CancellationToken cancellationToken)
