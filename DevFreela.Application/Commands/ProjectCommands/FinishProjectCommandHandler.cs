@@ -1,8 +1,8 @@
 ﻿using DevFreela.Core.DTOs;
 using DevFreela.Core.Entities;
 using DevFreela.Core.Repositories;
-using DevFreela.Core.Services;
 using DevFreela.Infraestructure.Persistence;
+using DevFreela.Infrastructure.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;

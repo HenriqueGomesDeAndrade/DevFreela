@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace DevFreela.Infrastructure.Payments
+namespace DevFreela.Infrastructure.Services
 {
     public class PaymentService : IPaymentService
     {

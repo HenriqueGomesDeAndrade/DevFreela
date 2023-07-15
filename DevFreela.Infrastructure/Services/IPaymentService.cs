@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Core.Services
+namespace DevFreela.Infrastructure.Services
 {
     public interface IPaymentService
     {
