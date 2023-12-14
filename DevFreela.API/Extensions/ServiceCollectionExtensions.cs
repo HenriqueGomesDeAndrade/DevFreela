@@ -28,6 +28,8 @@ namespace DevFreela.API.Extensions
             services.AddScoped<ISkillRepository, SkillRepository>();
             services.AddScoped<IBaseRepository, BaseRepository>();
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IMessageBusService, MessageBusService>();
